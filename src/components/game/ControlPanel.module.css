@@ -1,0 +1,563 @@
+.controlPanel {
+  background: linear-gradient(135deg, rgba(102, 126, 234, 0.95) 0%, rgba(118, 75, 162, 0.95) 100%);
+  backdrop-filter: blur(15px);
+  border-radius: 24px;
+  padding: 28px;
+  box-shadow: 0 15px 50px rgba(0, 0, 0, 0.4);
+  border: 3px solid rgba(255, 255, 255, 0.3);
+  color: white;
+  min-width: 340px;
+  max-width: 420px;
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+  position: relative;
+  overflow: hidden;
+}
+
+.controlPanel::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.05) 0%, transparent 70%);
+  animation: float 20s ease-in-out infinite;
+  pointer-events: none;
+}
+
+/* Секции */
+.statusSection,
+.speedSection,
+.controlsSection,
+.solvingSection,
+.hintsSection,
+.victorySection {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  position: relative;
+  z-index: 1;
+}
+
+.sectionTitle {
+  font-size: 1.4rem;
+  font-weight: 900;
+  margin: 0;
+  padding-bottom: 12px;
+  border-bottom: 3px solid rgba(255, 255, 255, 0.4);
+  text-shadow: 0 3px 12px rgba(0, 0, 0, 0.3);
+  letter-spacing: 0.5px;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.sectionTitle::before {
+  content: '';
+  width: 6px;
+  height: 24px;
+  background: linear-gradient(135deg, #ffffff 0%, rgba(255, 255, 255, 0.7) 100%);
+  border-radius: 3px;
+  box-shadow: 0 2px 8px rgba(255, 255, 255, 0.3);
+}
+
+/* Статус */
+.statusInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.statusItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 20px;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0.1) 100%);
+  border-radius: 16px;
+  backdrop-filter: blur(12px);
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.statusItem::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.5s;
+}
+
+.statusItem:hover::before {
+  left: 100%;
+}
+
+.statusItem:hover {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.3) 0%, rgba(255, 255, 255, 0.2) 100%);
+  transform: translateX(6px) scale(1.03);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.25);
+  border-color: rgba(255, 255, 255, 0.4);
+}
+
+.statusLabel {
+  font-size: 1.1rem;
+  font-weight: 700;
+  opacity: 0.95;
+  color: #ffffff;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+}
+
+.statusValue {
+  font-size: 1.2rem;
+  font-weight: 900;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  color: #ffffff;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.3) 0%, rgba(255, 255, 255, 0.1) 100%);
+  padding: 6px 12px;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+/* Управление скоростью */
+.speedControl {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.speedSlider {
+  flex: 1;
+  height: 10px;
+  border-radius: 6px;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.3) 0%, rgba(255, 255, 255, 0.2) 100%);
+  outline: none;
+  -webkit-appearance: none;
+  appearance: none;
+  border: 3px solid rgba(255, 255, 255, 0.4);
+  cursor: pointer;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.speedSlider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+  cursor: pointer;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  border: 4px solid #667eea;
+}
+
+.speedSlider::-webkit-slider-thumb:hover {
+  transform: scale(1.3);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5);
+}
+
+.speedSlider::-webkit-slider-thumb:active {
+  transform: scale(1.2);
+}
+
+.speedSlider::-moz-range-thumb {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+  cursor: pointer;
+  border: 4px solid #667eea;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.speedSlider::-moz-range-thumb:hover {
+  transform: scale(1.3);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5);
+}
+
+.speedSlider::-moz-range-thumb:active {
+  transform: scale(1.2);
+}
+
+.speedValue {
+  font-size: 1.3rem;
+  font-weight: 900;
+  min-width: 50px;
+  text-align: right;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  color: #ffffff;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.3) 0%, rgba(255, 255, 255, 0.1) 100%);
+  padding: 8px 12px;
+  border-radius: 10px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+}
+
+/* Кнопки */
+.buttonGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.button {
+  padding: 16px 24px;
+  border: none;
+  border-radius: 16px;
+  font-size: 1.1rem;
+  font-weight: 800;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+  position: relative;
+  overflow: hidden;
+}
+
+.button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.5s;
+}
+
+.button:hover::before {
+  left: 100%;
+}
+
+.button:hover {
+  transform: translateY(-5px) scale(1.03);
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.4);
+}
+
+.button:active {
+  transform: translateY(-2px) scale(1.01);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+}
+
+.button:focus-visible {
+  outline: 3px solid rgba(255, 255, 255, 0.8);
+  outline-offset: 3px;
+}
+
+.button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none !important;
+}
+
+.buttonPrimary {
+  background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+  color: #667eea;
+  border: none;
+  font-weight: 900;
+}
+
+.buttonPrimary:hover:not(:disabled) {
+  background: linear-gradient(135deg, #ffffff 0%, #ffffff 100%);
+  box-shadow: 0 12px 40px rgba(255, 255, 255, 0.5);
+}
+
+.buttonSecondary {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.3) 0%, rgba(255, 255, 255, 0.2) 100%);
+  color: white;
+  backdrop-filter: blur(12px);
+  border: 2px solid rgba(255, 255, 255, 0.4);
+}
+
+.buttonSecondary:hover:not(:disabled) {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.4) 0%, rgba(255, 255, 255, 0.3) 100%);
+  border-color: rgba(255, 255, 255, 0.6);
+}
+
+.buttonSolve {
+  background: linear-gradient(135deg, #ff6b9d 0%, #c471ed 100%);
+  color: white;
+  border: none;
+}
+
+.buttonSolve:hover:not(:disabled) {
+  background: linear-gradient(135deg, #ff7ba9 0%, #d081ff 100%);
+  box-shadow: 0 12px 40px rgba(255, 107, 157, 0.6);
+}
+
+.buttonDanger {
+  background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+  color: white;
+  border: none;
+}
+
+.buttonDanger:hover:not(:disabled) {
+  background: linear-gradient(135deg, #ff80aa 0%, #ffeb60 100%);
+  box-shadow: 0 12px 40px rgba(250, 112, 154, 0.6);
+}
+
+/* Подсказки */
+.hints {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.hint {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 12px;
+  backdrop-filter: blur(8px);
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.hint:hover {
+  background: rgba(255, 255, 255, 0.3);
+  transform: translateX(4px) scale(1.02);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.hintKey {
+  padding: 8px 12px;
+  background: rgba(255, 255, 255, 0.4);
+  border-radius: 8px;
+  font-family: 'Courier New', monospace;
+  font-size: 0.9rem;
+  font-weight: 800;
+  min-width: 70px;
+  text-align: center;
+  border: 2px solid rgba(255, 255, 255, 0.5);
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+  color: #667eea;
+}
+
+.hintText {
+  font-size: 1rem;
+  font-weight: 600;
+  opacity: 0.95;
+  color: #ffffff;
+}
+
+/* Победа */
+.victorySection {
+  background: linear-gradient(135deg, #ff6b9d 0%, #c471ed 100%);
+  border-radius: 16px;
+  padding: 28px;
+  text-align: center;
+  box-shadow: 0 10px 40px rgba(255, 107, 157, 0.6);
+  border: 3px solid rgba(255, 255, 255, 0.5);
+  animation: victoryAppear 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.victoryMessage {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.victoryTitle {
+  font-size: 2rem;
+  font-weight: 900;
+  margin: 0;
+  animation: bounce 1s ease-in-out infinite;
+  text-shadow: 0 3px 10px rgba(0, 0, 0, 0.4);
+  color: #ffffff;
+}
+
+.victoryText {
+  font-size: 1.2rem;
+  margin: 0;
+  font-weight: 600;
+  opacity: 0.95;
+  color: #ffffff;
+}
+
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-12px);
+  }
+}
+
+@keyframes victoryAppear {
+  from {
+    opacity: 0;
+    transform: scale(0.8) rotate(-5deg);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) rotate(0deg);
+  }
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+  .controlPanel {
+    min-width: 280px;
+    max-width: 100%;
+    padding: 20px;
+    gap: 20px;
+  }
+
+  .sectionTitle {
+    font-size: 1.2rem;
+  }
+
+  .button {
+    padding: 12px 18px;
+    font-size: 1rem;
+  }
+
+  .victoryTitle {
+    font-size: 1.7rem;
+  }
+
+  .victoryText {
+    font-size: 1.1rem;
+  }
+}
+/* Улучшенные стили для подсказок */
+.hints {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.hint {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 16px 20px;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0.1) 100%);
+  border-radius: 16px;
+  backdrop-filter: blur(12px);
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.hint::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.5s;
+}
+
+.hint:hover::before {
+  left: 100%;
+}
+
+.hint:hover {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.3) 0%, rgba(255, 255, 255, 0.2) 100%);
+  transform: translateX(6px) scale(1.03);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.25);
+  border-color: rgba(255, 255, 255, 0.4);
+}
+
+.hintKey {
+  padding: 10px 14px;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.4) 0%, rgba(255, 255, 255, 0.3) 100%);
+  border-radius: 10px;
+  font-family: 'Courier New', monospace;
+  font-size: 1rem;
+  font-weight: 900;
+  min-width: 80px;
+  text-align: center;
+  border: 2px solid rgba(255, 255, 255, 0.5);
+  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+  color: #667eea;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.hintText {
+  font-size: 1.1rem;
+  font-weight: 700;
+  opacity: 0.95;
+  color: #ffffff;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* Улучшенные стили для победного сообщения */
+.victorySection {
+  background: linear-gradient(135deg, #ff6b9d 0%, #c471ed 100%);
+  border-radius: 20px;
+  padding: 32px;
+  text-align: center;
+  box-shadow: 0 15px 50px rgba(255, 107, 157, 0.6);
+  border: 3px solid rgba(255, 255, 255, 0.5);
+  animation: victoryAppear 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.victorySection::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.2) 0%, transparent 70%);
+  animation: float 15s ease-in-out infinite;
+}
+
+.victoryMessage {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  position: relative;
+  z-index: 1;
+}
+
+.victoryTitle {
+  font-size: 2.2rem;
+  font-weight: 900;
+  margin: 0;
+  animation: bounce 1.2s ease-in-out infinite;
+  text-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+  color: #ffffff;
+}
+
+.victoryText {
+  font-size: 1.3rem;
+  margin: 0;
+  font-weight: 700;
+  opacity: 0.95;
+  color: #ffffff;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: rotate(0deg) translate(0, 0);
+  }
+  33% {
+    transform: rotate(120deg) translate(30px, -30px);
+  }
+  66% {
+    transform: rotate(240deg) translate(-20px, 20px);
+  }
+}
